@@ -1,0 +1,106 @@
+#include<bits/stdc++.h>
+
+using namespace std;
+
+#define pb push_back
+#define mp make_pair
+#define clr(x) x.clear()
+
+#ifndef ONLINE_JUDGE
+#define gc getchar
+#else
+#define gc getchar_unlocked
+#endif
+
+const int MOD=1e9+7;
+
+typedef vector<int> vi;
+typedef pair<int,int> ii;
+typedef vector<ii> vii;
+typedef vector<vii> vvii;
+typedef long long LL;
+
+int read_int()
+{
+    char c = gc();
+    while(c<'0' || c>'9') c = gc();
+    int ret = 0;
+    while(c>='0' && c<='9')
+    {
+        ret = 10 * ret + c - 48;
+        c = gc();
+    }
+    return ret;
+}
+LL inversion(int *a,int low,int high)
+{
+    if(low==high)
+        return 0;
+
+    if(low+1==high)
+    {
+        if(a[low]<=a[high])
+            return 0;
+        else
+        {
+            int t=a[low];
+            a[low]=a[high];
+            a[high]=t;
+            //cout<<"low   1\n";
+            return 1;
+        }
+    }
+        int l=inversion(a,low,low+((high-low)/2));
+        int r=inversion(a,low+(high-low)/2+1,high);
+
+        int i=low;
+        int j=low+((high-low)/2)+1;
+        int mid=j;
+        int k=0,c[high-low+1],ans=0;
+        while(i<mid&&j<=high)
+        {
+            if(a[i]<a[j])
+                c[k++]=a[i++];
+            else
+            {
+                c[k++]=a[j++];
+                ans+=mid-i;
+            }
+        }
+        if(i<mid)
+        {
+            while(i<mid)
+            {
+                c[k++]=a[i++];
+            }
+        }
+        else //if(j<=high)
+            while(j<=high)
+            c[k++]=a[j++];
+
+        for(int i=low,k=0;i<=high;i++,k++)
+        {
+            a[i]=c[k];
+         //   cout<<a[i]<<" ";
+        }
+       // cout<<"\n";
+        //cout<<l+r+ans<<"\n";
+        return l+r+ans;
+
+}
+int main()
+{
+    freopen("input.txt","r",stdin);
+    int h,i=0,k;
+    cin>>h;
+    k=h;
+    int a[h];//={ 1,2,3,4,5,6 };
+    while(h--)
+    {
+        cin>>a[i++];
+    }
+
+    cout<<inversion(a,0,k-1)<<"\n";
+
+    return 0;
+}
