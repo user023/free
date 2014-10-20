@@ -1,0 +1,121 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+#define pb push_back
+#define mp make_pair
+#define clr(x) x.clear()
+
+#ifndef ONLINE_JUDGE
+#define gc getchar
+#else
+#define gc getchar_unlocked
+#endif
+
+const int MOD=1e9+7;
+
+typedef vector<int> vi;
+typedef pair<int,int> ii;
+typedef vector<ii> vii;
+typedef vector<vii> vvii;
+typedef long long LL;
+
+int read_int()
+{
+    char c = gc();
+    while(c<'0' || c>'9') c = gc();
+    int ret = 0;
+    while(c>='0' && c<='9')
+    {
+        ret = 10 * ret + c - 48;
+        c = gc();
+    }
+    return ret;
+}
+struct node
+{
+    int data;
+    node *left;
+    node *right;
+};
+node* newNode(int data)
+{
+    node  *temp=new node();
+    temp->data=data;
+    temp->left=temp->right=NULL;
+    return temp;
+}
+int Size(node *root)
+{
+    if(root==NULL)
+        return 0;
+
+    int sl=0,sr=0;
+    sl=Size(root->left);
+    sr=Size(root->right);
+    return sl+sr+1;
+}
+bool Identical(node *first,node *second)
+{
+    if(first==NULL&&second==NULL)
+        return true;
+    if((first==NULL&&second!=NULL)||(first!=NULL&&second==NULL))
+        return false;
+    if(first->data==second->data&&Identical(first->left,second->left)&&Identical(first->right,second->right))
+        return true;
+    else return false;
+
+}
+int maxHeight(node *root)
+{
+    if(root==NULL)
+        return 0;
+    int r=maxHeight(root->left);
+    int l=maxHeight(root->right);
+    return max(l,r)+1;
+}
+void inOrder(node* root)
+{
+    if(root==NULL)
+        return;
+    inOrder(root->left);
+    cout<<root->data<<" ";
+    inOrder(root->right);
+    return;
+}
+node *MirrorTree(node *root)
+{
+    if(root==NULL)
+        return NULL;
+    MirrorTree(root->left);
+    MirrorTree(root->right);
+    node *temp=root->left;
+    root->left=root->right;
+    root->right=temp;
+    return root;
+
+}
+
+int main()
+{
+    //freopen("input.txt","r",stdin);
+  struct node *root = newNode(1);
+  root->left        = newNode(2);
+  root->right       = newNode(3);
+  root->left->left  = newNode(4);
+  root->left->right = newNode(5);
+
+  /* Print inorder traversal of the input tree */
+  printf("\n Inorder traversal of the constructed tree is \n");
+  inOrder(root);
+
+  /* Convert tree to its mirror */
+  MirrorTree(root);
+
+  /* Print inorder traversal of the mirror tree */
+  printf("\n Inorder traversal of the mirror tree is \n");
+  inOrder(root);
+
+  getchar();
+    return 0;
+
+}
