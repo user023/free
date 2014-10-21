@@ -1,0 +1,121 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+#define pb push_back
+#define mp make_pair
+#define clr(x) x.clear()
+
+#ifndef ONLINE_JUDGE
+#define gc getchar
+#else
+#define gc getchar_unlocked
+#endif
+
+const int MOD=1e9+7;
+
+typedef vector<int> vi;
+typedef pair<int,int> ii;
+typedef vector<ii> vii;
+typedef vector<vii> vvii;
+typedef long long LL;
+
+int read_int()
+{
+    char c = gc();
+    while(c<'0' || c>'9') c = gc();
+    int ret = 0;
+    while(c>='0' && c<='9')
+    {
+        ret = 10 * ret + c - 48;
+        c = gc();
+    }
+    return ret;
+}
+struct node
+{
+    int data;
+    node *left;
+    node *right;
+};
+node* newNode(int data)
+{
+    node  *temp=new node();
+    temp->data=data;
+    temp->left=temp->right=NULL;
+    return temp;
+}
+int leaf(node *root)
+{
+    if(root==NULL)
+        return 0;
+    if(root->left==NULL&&root->right==NULL)
+        return 1;
+    int l=leaf(root->left),r=leaf(root->right);
+    return l+r;
+}
+void levelorder(node *root)
+{
+    queue<node*>que;
+    que.push(root);
+    while(!que.empty())
+    {
+        node*temp= que.front();
+        if (temp==NULL)
+        {que.pop();
+            continue;}
+
+        que.pop();
+        que.push(temp->left);
+        que.push(temp->right);
+        cout<<temp->data<<" ";
+    }
+    return;
+}
+void pathroot_leaf(node *root,int arr[],int n)
+{
+    if((root->left==NULL)&&(root->right==NULL))
+    {
+        arr[n++]=root->data;
+        for(int i=0;i<n;i++)
+        {
+            cout<<arr[i]<<" ";
+        }
+        cout<<"\n";
+        return;
+    }
+
+    if(root->left!=NULL)
+    {
+        arr[n++]=root->data;
+        pathroot_leaf(root->left,arr,n);
+        n--;
+    }
+    if(root->right!=NULL)
+    {
+        arr[n++]=root->data;
+        pathroot_leaf(root->right,arr,n);
+        n--;
+    }
+
+
+
+
+
+
+}
+int main()
+{
+    //freopen("input.txt","r",stdin);
+  struct node *root = newNode(1);
+  root->left        = newNode(2);
+  root->right       = newNode(3);
+  root->left->left  = newNode(4);
+  root->left->right = newNode(5);
+
+  /* Print all root-to-leaf paths of the input tree */
+  int arr[10];
+  pathroot_leaf(root,arr,0);
+
+  getchar();
+  return 0;
+}
