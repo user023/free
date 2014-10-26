@@ -1,0 +1,98 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+#define pb push_back
+#define mp make_pair
+#define clr(x) x.clear()
+
+#ifndef ONLINE_JUDGE
+#define gc getchar
+#else
+#define gc getchar_unlocked
+#endif
+
+const int MOD=1e9+7;
+
+typedef vector<int> vi;
+typedef pair<int,int> ii;
+typedef vector<ii> vii;
+typedef vector<vii> vvii;
+typedef long long LL;
+
+int read_int()
+{
+    char c = gc();
+    while(c<'0' || c>'9') c = gc();
+    int ret = 0;
+    while(c>='0' && c<='9')
+    {
+        ret = 10 * ret + c - 48;
+        c = gc();
+    }
+    return ret;
+}
+//25/10/14
+//shankul khare
+//insert anode in a sorted LL
+struct node
+{
+    int data;
+    //node *random;
+    struct node* next;
+
+};
+node *NewNode(int data)
+{
+    node *temp=new node();
+    temp->data=data;
+    temp->next=NULL;
+    //temp->random=NULL;
+    return temp;
+}
+void insert_a_node_in_a_sorted_LL(node **head,int data)
+{
+    if(head==NULL)
+        {
+            *head=NewNode(data);
+            return;// /;/head;
+        }
+    if((*head)->data>=data)
+    {
+        node *temp=NewNode(data);
+        temp->next=*head;
+        *head=temp;
+        return ;//head;
+    }
+    node *temp=*head;
+    while(temp->next!=NULL&&temp->next->data<=data)
+    {
+        temp=temp->next;
+    }
+    if(temp->next==NULL)
+    {
+        node *tem=NewNode(data);
+        temp->next=tem;
+        return ;//head;
+    }
+    else
+    {
+        node*tem=NewNode(data);
+        tem->next=temp->next;
+        temp->next=tem;
+        return;// head;
+    }
+    return;// head;
+
+}
+int main()
+{
+    node *A=NewNode(1);
+    A->next=NewNode(3);
+    insert_a_node_in_a_sorted_LL(&A,2);
+    while(A!=NULL)
+    {
+        cout<<A->data;
+        A=A->next;
+    }
+    return 0;
+}
