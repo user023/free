@@ -54,6 +54,13 @@ node* insert_a_node_in_a_sorted_LL(node *head,int data)
     if(head==NULL)
         return NewNode(data);
     node*curr=head,*prev;
+    if(curr->data>=data)
+    {
+        node *NEW=NewNode(data);
+        NEW->next=head;
+        head=NEW;
+        return head;
+    }
     while(curr!=NULL&&curr->data<data)
     {
         prev=curr;
