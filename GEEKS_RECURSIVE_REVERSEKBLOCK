@@ -1,0 +1,120 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+#define pb push_back
+#define mp make_pair
+#define clr(x) x.clear()
+
+#ifndef ONLINE_JUDGE
+#define gc getchar
+#else
+#define gc getchar_unlocked
+#endif
+
+const int MOD=1e9+7;
+
+typedef vector<int> vi;
+typedef pair<int,int> ii;
+typedef vector<ii> vii;
+typedef vector<vii> vvii;
+typedef long long LL;
+
+int read_int()
+{
+    char c = gc();
+    while(c<'0' || c>'9') c = gc();
+    int ret = 0;
+    while(c>='0' && c<='9')
+    {
+        ret = 10 * ret + c - 48;
+        c = gc();
+    }
+    return ret;
+}
+//25/10/14 
+//shankul khare
+
+struct node
+{
+    int data;
+    //node *random;
+    struct node* next;
+
+};
+node *NewNode(int data)
+{
+    node *temp=new node();
+    temp->data=data;
+    temp->next=NULL;
+    //temp->random=NULL;
+    return temp;
+}
+/*
+node *reverse_LL(node *head)
+{
+    node *prev=NULL,*next;
+    while(head!=NULL)
+    {
+        next=head->next;
+        head->next=prev;
+        prev=head;
+        head=next;
+    }
+    return prev;
+}
+void reverse_k_nodes_in_a_Linked_list(node *head,int k)
+{
+    node *temp=head,*prev=NULL,*next;
+    int i=0;
+    while(temp!=NULL&&i<k)
+    {
+        i++;
+        next=temp->next;
+        temp->next=prev;
+        prev=temp;
+        temp=next;
+    }
+    head=prev;
+
+}
+*/
+node *GEEKS_RECURSIVE_REVERSEKBLOCK(node * head,int k)
+{
+    node *curr=head,*next,*prev=NULL;
+    int i=0;
+    while(curr!=NULL&&i<k)
+    {
+        next=curr->next;
+        curr->next=prev;
+        prev=curr;
+        curr=next;
+        i++;
+    }
+    if(next!=NULL)
+        head->next=GEEKS_RECURSIVE_REVERSEKBLOCK(next,k);
+    return prev;
+}
+void print(node *a)
+{
+    while(a!=NULL)
+        cout<<a->data,a=a->next;
+}
+int main()
+{
+ node *   A=NewNode(1);
+    A->next=NewNode(2);
+    A->next->next=NewNode(3);
+    A->next->next->next=NewNode(4);
+    A->next->next->next->next=NewNode(5);
+    A->next->next->next->next->next=NewNode(6);
+    A->next->next->next->next->next->next=NewNode(7);
+    A->next->next->next->next->next->next->next=NewNode(8);
+    A->next->next->next->next->next->next->next->next=NewNode(9);
+    A->next->next->next->next->next->next->next->next->next=NewNode(10);
+    A->next->next->next->next->next->next->next->next->next->next=NewNode(11);
+    print(A);
+    cout<<"\n";
+    A=GEEKS_RECURSIVE_REVERSEKBLOCK(A,2);
+    print(A);
+return 0;
+}
