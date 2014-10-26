@@ -1,0 +1,166 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+#define pb push_back
+#define mp make_pair
+#define clr(x) x.clear()
+
+#ifndef ONLINE_JUDGE
+#define gc getchar
+#else
+#define gc getchar_unlocked
+#endif
+
+const int MOD=1e9+7;
+
+typedef vector<int> vi;
+typedef pair<int,int> ii;
+typedef vector<ii> vii;
+typedef vector<vii> vvii;
+typedef long long LL;
+
+int read_int()
+{
+    char c = gc();
+    while(c<'0' || c>'9') c = gc();
+    int ret = 0;
+    while(c>='0' && c<='9')
+    {
+        ret = 10 * ret + c - 48;
+        c = gc();
+    }
+    return ret;
+}
+//25/10/14 
+//shankul khare
+
+
+struct node
+{
+    int data;
+    node *random;
+    struct node* next;
+
+};
+node *NewNode(int data)
+{
+    node *temp=new node();
+    temp->data=data;
+    temp->next=NULL;
+    temp->random=NULL;
+    return temp;
+}
+
+void print(node *head)
+{
+    while(head!=NULL)
+    {
+        cout<<head->data<<" ";
+        head=head->next;
+    }
+    return ;
+
+}
+void print_random(node *head)
+{
+    int i=0;
+    node *temp=head;
+    while(temp!=NULL)
+    {
+        i++;
+        temp=temp->next;
+    }
+    while(head!=NULL&&i>0)
+    {
+        i--;
+        cout<<head->data<<" ";
+        head=head->random;
+    }
+    return ;
+
+}
+void copy_LL(node *head)
+{
+    node *temp=head;
+    while(temp!=NULL)
+    {
+        node *Copy=NewNode(temp->data);
+        Copy->next=temp->next;
+        temp->next=Copy;
+        temp=temp->next->next;
+    }
+    print(head);
+}
+void copy_random_ptr(node *head)
+{
+    while(head!=NULL)
+    {
+        head->next->random=head->random->next;
+        head=head->next->next;
+    }
+    return ;
+}
+node *copy_LL_with_random(node *head)
+{
+    copy_LL(head);
+    copy_random_ptr(head);
+    node *Copy=head->next;
+    node *re;
+    re=Copy;
+    while(head->next!=NULL&&Copy->next!=NULL)
+    {
+        head->next=head->next->next;
+        Copy->next=Copy->next->next;
+        head=head->next;
+        Copy=Copy->next;
+    }
+    head->next=NULL;
+    return re;
+}
+int main()
+{
+node*A=NewNode(1);
+
+node*B=NewNode(2);
+
+node*C=NewNode(3);
+
+node*D=NewNode(4);
+
+node*E=NewNode(5);
+
+node*F=NewNode(6);
+A->next=B;
+B->next=C;
+C->next=D;
+D->next=E;
+E->next=F;
+A->random=C;
+
+B->random=D;
+C->random=E;
+D->random=F;
+E->random=A;
+F->random=B;
+print(A);
+cout<<"\n";
+print_random(A);
+
+cout<<"\n";
+node *NEW=copy_LL_with_random(A);
+cout<<"\n";
+print(A);
+
+cout<<"\n";
+//node *NEW=copy_LL_with_random(A);
+print(NEW);
+
+cout<<"\n";
+print_random(NEW);
+cout<<"\n";
+print_random(A);
+
+cout<<"\n";
+
+return 0;
+}
