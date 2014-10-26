@@ -1,0 +1,86 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+#define pb push_back
+#define mp make_pair
+#define clr(x) x.clear()
+
+#ifndef ONLINE_JUDGE
+#define gc getchar
+#else
+#define gc getchar_unlocked
+#endif
+
+const int MOD=1e9+7;
+
+typedef vector<int> vi;
+typedef pair<int,int> ii;
+typedef vector<ii> vii;
+typedef vector<vii> vvii;
+typedef long long LL;
+
+int read_int()
+{
+    char c = gc();
+    while(c<'0' || c>'9') c = gc();
+    int ret = 0;
+    while(c>='0' && c<='9')
+    {
+        ret = 10 * ret + c - 48;
+        c = gc();
+    }
+    return ret;
+}
+//25/10/14
+//shankul khare
+//Find max in a tree a tree
+//20:34
+struct node
+{
+    int data;
+    node*left;
+    node*right;
+};
+node*NewNode(int data)
+{
+    //node*temp;
+    node *temp=new node();
+    temp->data=data;
+    temp->left=NULL;
+    temp->right=NULL;
+    return temp;
+}
+void reverse_levelorder(node*root)
+{
+    queue<node*>que;
+    stack<node*>stc;
+    que.push(root);
+    while(!que.empty())
+    {
+        stc.push(que.front());
+        que.pop();
+        if(stc.top()->right!=NULL)
+        que.push(stc.top()->right);
+        if(stc.top()->left!=NULL)
+            que.push(stc.top()->left);
+    }
+    while(!stc.empty())
+    {
+        cout<<stc.top()->data<<" ";
+        stc.pop();
+    }
+}
+
+int main()
+{
+
+    node *A=NewNode(1);
+    A->left=NewNode(2);
+    A->left->left=NewNode(4);
+    A->left->right=NewNode(5);
+    A->right=NewNode(3);
+    A->right->left=NewNode(6);
+    A->right->right=NewNode(7);
+    reverse_levelorder(A);
+    return 0;
+}
