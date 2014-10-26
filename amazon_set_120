@@ -1,0 +1,157 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+#define pb push_back
+#define mp make_pair
+#define clr(x) x.clear()
+
+#ifndef ONLINE_JUDGE
+#define gc getchar
+#else
+#define gc getchar_unlocked
+#endif
+
+const int MOD=1e9+7;
+
+typedef vector<int> vi;
+typedef pair<int,int> ii;
+typedef vector<ii> vii;
+typedef vector<vii> vvii;
+typedef long long LL;
+
+int read_int()
+{
+    char c = gc();
+    while(c<'0' || c>'9') c = gc();
+    int ret = 0;
+    while(c>='0' && c<='9')
+    {
+        ret = 10 * ret + c - 48;
+        c = gc();
+    }
+    return ret;
+}
+//25/10/14
+//shankul khare
+//amazon_set_120
+//15:37
+struct node
+{
+    int data;
+    node*left;
+    node*right;
+    int horizontal_distance;
+};
+node*NewNode(int data)
+{
+    //node*temp;
+    node *temp=new node();
+    temp->data=data;
+    temp->left=NULL;
+    temp->right=NULL;
+    temp->horizontal_distance=0;
+    return temp;
+}
+bool func(pair<LL,string>A,pair<LL,string>B)
+{
+    if(A.first!=B.first)
+        return A.first>B.first;
+    else
+        return A.second<B.second;
+}
+
+void func_amazon_set_120()
+{
+    int n;
+    cin>>n;
+    int y=n;
+    vector<string> vec;
+    while(y--)
+    {
+        string a;
+        cin>>a;
+        vec.pb(a);
+    }
+
+    pair<LL,string> pp;
+
+    map<char,int>ma;
+    ma['A']=2;
+    ma['B']=2;
+    ma['C']=2;
+    ma['D']=3;
+    ma['E']=3;
+    ma['F']=3;
+    ma['G']=4;
+    ma['H']=4;
+    ma['I']=4;
+    ma['J']=5;
+    ma['K']=5;
+    ma['L']=5;
+    ma['M']=6;
+    ma['N']=6;
+    ma['O']=6;
+    ma['P']=7;
+    ma['Q']=7;
+    ma['R']=7;
+    ma['S']=7;
+    ma['T']=8;
+    ma['U']=8;
+    ma['V']=8;
+    ma['W']=9;
+    ma['X']=9;
+    ma['Y']=9;
+    ma['Z']=9;
+    ma['a']=2;
+    ma['b']=2;
+    ma['c']=2;
+    ma['d']=3;
+    ma['e']=3;
+    ma['f']=3;
+    ma['g']=4;
+    ma['h']=4;
+    ma['i']=4;
+    ma['j']=5;
+    ma['k']=5;
+    ma['l']=5;
+    ma['m']=6;
+    ma['n']=6;
+    ma['o']=6;
+    ma['p']=7;
+    ma['q']=7;
+    ma['r']=7;
+    ma['s']=7;
+    ma['t']=8;
+    ma['u']=8;
+    ma['v']=8;
+    ma['w']=9;
+    ma['x']=9;
+    ma['y']=9;
+    ma['z']=9;
+
+    vector<pair<LL ,string> > vect;
+
+    for(int i=0;i<n;i++)
+    {
+        string a=vec[i];
+        LL p=0;
+
+        for(int i=0;a[i]!='\0';i++)
+            p=p*10+ma[a[i]];
+
+        vect.pb(mp(p,a));
+    }
+
+    sort(vect.begin(),vect.end(),func);
+    for(vector<pair<LL ,string> >::iterator it=vect.begin();it!=vect.end();it++)
+    {
+        cout<<(*it).first<<" "<<(*it).second<<"\n";
+    }
+}
+int main()
+{
+//    freopen("input.txt","r",stdin);
+  func_amazon_set_120();
+  return 0;
+}
+
