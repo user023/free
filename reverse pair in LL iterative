@@ -1,0 +1,101 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+#define pb push_back
+#define mp make_pair
+#define clr(x) x.clear()
+
+#ifndef ONLINE_JUDGE
+#define gc getchar
+#else
+#define gc getchar_unlocked
+#endif
+
+const int MOD=1e9+7;
+
+typedef vector<int> vi;
+typedef pair<int,int> ii;
+typedef vector<ii> vii;
+typedef vector<vii> vvii;
+typedef long long LL;
+
+int read_int()
+{
+    char c = gc();
+    while(c<'0' || c>'9') c = gc();
+    int ret = 0;
+    while(c>='0' && c<='9')
+    {
+        ret = 10 * ret + c - 48;
+        c = gc();
+    }
+    return ret;
+}
+//25/10/14
+//shankul khare
+//reverse LL in pairs
+struct node
+{
+    int data;
+    //node *random;
+    struct node* next;
+
+};
+node *NewNode(int data)
+{
+    node *temp=new node();
+    temp->data=data;
+    temp->next=NULL;
+    //temp->random=NULL;
+    return temp;
+}
+node* iterative_LL_in_pairs(node *head)
+{
+    node *curr,*prev,*next;
+    if(head==NULL)
+        return head;
+    if(head->next==NULL)
+        return head;
+
+    prev=head;
+    curr=prev->next;
+    node*ret=curr;
+
+    while(true)
+    {
+        next=curr->next;
+        curr->next=prev;
+        if(next==NULL||next->next==NULL)
+        {
+            prev->next=next;
+            break;
+        }
+        prev->next=next->next;
+        prev=next;
+        curr=prev->next;
+    }
+    return ret;
+
+
+}
+int main()
+{
+    node*A=NewNode(1);
+    A->next=NewNode(2);
+    A->next->next=NewNode(3);
+    A->next->next->next=NewNode(4);
+
+    A->next->next->next->next=NewNode(5);
+    A->next->next->next->next->next=NewNode(6);
+    A->next->next->next->next->next->next=NewNode(7);
+   // A->next->next->next->next->next->next->next=NewNode(8);
+    A=iterative_LL_in_pairs(A);
+    while(A!=NULL)
+    {
+        cout<<A->data;
+        A=A->next;
+    }
+
+
+    return 0;
+}
