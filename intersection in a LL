@@ -1,0 +1,118 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+#define pb push_back
+#define mp make_pair
+#define clr(x) x.clear()
+
+#ifndef ONLINE_JUDGE
+#define gc getchar
+#else
+#define gc getchar_unlocked
+#endif
+
+const int MOD=1e9+7;
+
+typedef vector<int> vi;
+typedef pair<int,int> ii;
+typedef vector<ii> vii;
+typedef vector<vii> vvii;
+typedef long long LL;
+
+int read_int()
+{
+    char c = gc();
+    while(c<'0' || c>'9') c = gc();
+    int ret = 0;
+    while(c>='0' && c<='9')
+    {
+        ret = 10 * ret + c - 48;
+        c = gc();
+    }
+    return ret;
+}
+//25/10/14
+//shankul khare
+//Find intersection in a LL
+struct node
+{
+    int data;
+    //node *random;
+    struct node* next;
+
+};
+node *NewNode(int data)
+{
+    node *temp=new node();
+    temp->data=data;
+    temp->next=NULL;
+    //temp->random=NULL;
+    return temp;
+}
+
+int length(node*head)
+{
+    int coun=0;
+    while(head!=NULL)
+    {
+        coun++;
+        head=head->next;
+    }
+    return coun;
+}
+node *aux_intersection(node *head1,node*head2)
+{
+    if(head1==head2)
+        return head1;
+    else
+    {
+        while(head1->next!=head2->next)
+        {
+            head1=head1->next;
+            head2=head2->next;
+        }
+    }
+    return head1->next;
+}
+node*Find_intersection_of_two_linked_list(node*head1,node*head2)
+{
+    int l1=length(head1);
+    int l2=length(head2);
+    if(l1==l2)
+    {
+        return aux_intersection(head1,head2);
+    }
+    if(l1>l2)
+    {
+        int diff=l1-l2;
+        while(diff--)
+        {
+            head1=head1->next;
+        }
+        return aux_intersection(head1,head2);
+    }
+    else
+    {
+        int diff=l2-l1;
+        while(diff--)
+        {
+            head2=head2->next;
+        }
+        return aux_intersection(head1,head2);
+    }
+}
+int main()
+{
+    node *A=NewNode(1);
+    A->next=NewNode(2);
+    A->next->next=NewNode(3);
+    A->next->next->next=NewNode(4);
+    node*B=NewNode(5);
+    B->next=NewNode(6);
+    B->next->next=NewNode(7);
+    B->next->next->next=A->next->next;
+    node *C=Find_intersection_of_two_linked_list(A,B);
+    cout<<C->data;
+
+    return 0;
+}
